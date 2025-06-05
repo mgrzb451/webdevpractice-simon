@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+  <!-- Links -->
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./script.js"></script>  
+  <link rel="shortcut icon" href="./assets/simon-icon.png" type="image/png">
+  <title>Simon the Game</title>
+</head>
+<body>
+  <header>
+    <h2>the game of</h2>
+    <h1>Simon</h1>
+  </header>
+
+  <main>
+    <div id="pie-container" class="simon-pie-container">
+      <div id="slice0" class="pie-slice-template pie-slice-0"></div>
+      <div id="slice1" class="pie-slice-template pie-slice-1"></div>
+      <div id="slice2" class="pie-slice-template pie-slice-2"></div>
+      <div id="slice3" class="pie-slice-template pie-slice-3"></div>
+      <div id="button-play" class="play-button">
+        <svg viewBox="0 0 384 512">
+          <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+        </svg>
+      </div>
+    </div>
+  
+    <h2 class="score-display">score: <span id="score-display">0</span></h2>    
+  </main>
+  
+</body>
+</html>
+

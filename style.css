@@ -1,0 +1,214 @@
+/* SETUP */
+:root {
+  --color-red: hsl(0, 100%, 50%);
+  --color-red-light: hsl(0, 100%, 90%);
+  --color-green: hsl(120, 100%, 25%);
+  --color-green-light: hsl(120, 100%, 75%);
+  --color-blue: hsl(240, 100%, 50%);
+  --color-blue-light: hsl(240, 100%, 80%);
+  --color-yellow: hsl(60, 100%, 35%);
+  --color-yellow-light: hsl(60, 80%, 95%);
+  --color-grey-dark: hsl(0, 0%, 20%);
+  --color-grey-light: hsl(0, 0%, 80%);
+  --color-grey-pie-border: hsl(0, 0%, 30%);
+  --color-off-white: white;
+}
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-grey-dark);
+  font-family: "Jersey 10", "Roboto", "Courier New", sans-serif;
+  color: var(--color-off-white);
+  width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr min(100vw - 40px, 1200px) 1fr;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  overflow: hidden;
+
+  
+  & > * {
+    grid-column: 2;
+  }
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+header {
+  grid-row: 1;
+
+  h2 {
+    font-size: 3rem;
+    letter-spacing: .2rem;
+  }
+  h1 {
+    font-size: 12rem;
+    line-height: .75;
+  }
+
+  @media screen and (max-width: 800px) {  
+    h2 {
+      font-size: 2rem;
+    }
+    h1 {
+      font-size: 6rem;
+    }
+  }
+}
+
+main {
+  margin-block-start: 40px;
+  grid-row: 2;
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
+  justify-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+
+.simon-pie-container {
+  width: 50%;
+  aspect-ratio: 1/1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: max(5px, 1vw);
+  background-color: var(--color-grey-pie-border);
+  padding: max(5px, 1vw);
+  border-radius: 100%;
+  position: relative;
+  box-shadow: 0px 0px 10px 2px var(--color-grey-light);
+}
+
+.pie-slice-template {
+  width: 100%;
+  height: 100%;
+
+  /* NOTE X axis is down I think */
+  clip-path: shape(
+    from 100% 0%,
+    line to 100% 75%,
+    arc to 75% 100% of 27% 27% ccw small,
+    line to 0% 100%,
+    arc to 100% 0% of 100% 100% cw);
+  
+  cursor: pointer;
+  transition: filter 200ms;
+
+  &:hover, &:focus {
+    filter: opacity(70%);
+  }
+}
+
+.pie-slice-0 {
+  grid-column: 1;
+  grid-row: 1;
+  background-color: var(--color-red);
+  --pie-slice-color1: var(--color-red);
+  --pie-slice-color2: var(--color-red-light);
+}
+.pie-slice-1 {
+  grid-column: 2;
+  grid-row: 1;
+  background-color: var(--color-green);
+  transform: rotateZ(90deg);
+    --pie-slice-color1: var(--color-green);
+  --pie-slice-color2: var(--color-green-light);
+}
+.pie-slice-2 {
+  grid-column: 1;
+  grid-row: 2;
+  background-color: var(--color-yellow);
+  transform: rotateZ(-90deg);
+    --pie-slice-color1: var(--color-yellow);
+  --pie-slice-color2: var(--color-yellow-light);
+}
+.pie-slice-3 {
+  grid-column: 2;
+  grid-row: 2;
+  background-color: var(--color-blue);
+  transform: rotateZ(180deg);
+    --pie-slice-color1: var(--color-blue);
+  --pie-slice-color2: var(--color-blue-light);
+}
+
+.play-button {
+  --play-button-width: 22%;
+  width: var(--play-button-width);
+  aspect-ratio: 1/1;
+  background-color: var(--color-grey-pie-border);
+  border-radius: 100%;
+  z-index: 2;
+  position: absolute;
+  left: calc(50% - var(--play-button-width) / 2);
+  top: calc(50% - var(--play-button-width) / 2);
+  border: 2px solid black;
+  box-shadow: 0px 0px 10px 1px var(--color-grey-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+
+  svg {
+    width: 60%;
+    aspect-ratio: 1/1;
+    fill: var(--color-grey-light);
+    translate: 10% 0;
+    transition: all 250ms ease-in-out;
+  }
+
+  &:hover, &:focus {
+    background-color: grey;
+
+    & > svg {
+      fill: var(--color-grey-dark);
+    }
+  }
+
+  &:active {
+    background-color: var(--color-off-white);
+
+    & > svg {
+      fill: black;
+    }
+  }
+}
+
+@keyframes flash {
+    0% {
+      background-color: var(--pie-slice-color1);
+    }
+    50% {
+      background-color: var(--pie-slice-color2);
+    }
+    100% {
+      background-color: var(--pie-slice-color1);
+    }
+}
+.flash-slice {
+  animation: flash 1000ms ease-in-out;
+}
+
+.score-display {  
+  font-size: 3rem;
+  letter-spacing: .3rem;
+
+    span {
+      font-size: 5rem;
+      vertical-align: middle;
+    }
+}
+
